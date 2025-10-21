@@ -32,36 +32,24 @@ services:
           - "configserver"
   eureka1:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    environment:
-      - SERVER_PORT=8070
-      - EUREKA_INSTANCE_HOSTNAME=eureka1
-      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
-      - EUREKA_CLIENT_FETCH_REGISTRY=true
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka2:8072/eureka/,http://eureka3:8073/eureka/
     ports: ["8070:8070"]
-    networks: [backend]
+    environment:
+      - SPRING_APPLICATION_NAME=eureka-server
+      - SPRING_APPLICATION_JSON={"server":{"port":8070},"eureka":{"instance":{"hostname":"eureka1"},"client":{"register-with-eureka":true,"fetch-registry":true,"serviceUrl":{"defaultZone":"http://eureka2:8072/eureka/,http://eureka3:8073/eureka/"}}}}
 
   eureka2:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    environment:
-      - SERVER_PORT=8072
-      - EUREKA_INSTANCE_HOSTNAME=eureka2
-      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
-      - EUREKA_CLIENT_FETCH_REGISTRY=true
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka1:8070/eureka/,http://eureka3:8073/eureka/
     ports: ["8072:8072"]
-    networks: [backend]
+    environment:
+      - SPRING_APPLICATION_NAME=eureka-server
+      - SPRING_APPLICATION_JSON={"server":{"port":8072},"eureka":{"instance":{"hostname":"eureka2"},"client":{"register-with-eureka":true,"fetch-registry":true,"serviceUrl":{"defaultZone":"http://eureka1:8070/eureka/,http://eureka3:8073/eureka/"}}}}
 
   eureka3:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    environment:
-      - SERVER_PORT=8073
-      - EUREKA_INSTANCE_HOSTNAME=eureka3
-      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=true
-      - EUREKA_CLIENT_FETCH_REGISTRY=true
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka1:8070/eureka/,http://eureka2:8072/eureka/
     ports: ["8073:8073"]
-    networks: [backend]
+    environment:
+      - SPRING_APPLICATION_NAME=eureka-server
+      - SPRING_APPLICATION_JSON={"server":{"port":8073},"eureka":{"instance":{"hostname":"eureka3"},"client":{"register-with-eureka":true,"fetch-registry":true,"serviceUrl":{"defaultZone":"http://eureka1:8070/eureka/,http://eureka2:8072/eureka/"}}}}
   licensingservice:
     image: ostock/licensing-service:0.0.3-SNAPSHOT
     environment:
@@ -70,6 +58,9 @@ services:
       CONFIGSERVER_PORT:   "8071"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY:       "IMSYMMETRIC"
+      SPRING_APPLICATION_JSON: >
+        {"eureka":{"client":{"serviceUrl":{"defaultZone":
+        "http://eureka1:8070/eureka/,http://eureka2:8072/eureka/,http://eureka3:8073/eureka/"}}}}
     depends_on:
       database:
         condition: service_healthy
@@ -87,6 +78,9 @@ services:
       CONFIGSERVER_PORT:   "8071"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY:       "IMSYMMETRIC"
+      SPRING_APPLICATION_JSON: >
+        {"eureka":{"client":{"serviceUrl":{"defaultZone":
+        "http://eureka1:8070/eureka/,http://eureka2:8072/eureka/,http://eureka3:8073/eureka/"}}}}
     depends_on:
       database:
         condition: service_healthy
