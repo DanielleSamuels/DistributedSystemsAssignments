@@ -32,24 +32,34 @@ services:
           - "configserver"
   eureka1:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    ports: ["8070:8070"]
+    ports: [ "8070:8070" ]
     environment:
-      - SPRING_APPLICATION_NAME=eureka-server
-      - SPRING_APPLICATION_JSON={"server":{"port":8070},"eureka":{"instance":{"hostname":"eureka1"},"client":{"register-with-eureka":true,"fetch-registry":true,"serviceUrl":{"defaultZone":"http://eureka2:8072/eureka/,http://eureka3:8073/eureka/"}}}}
-
+      SPRING_APPLICATION_NAME: eureka-server
+      SERVER_PORT: "8070"
+      EUREKA_INSTANCE_HOSTNAME: eureka1
+    networks:
+      backend:
+        aliases: [ eureka1 ]
   eureka2:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    ports: ["8072:8072"]
+    ports: [ "8072:8072" ]
     environment:
-      - SPRING_APPLICATION_NAME=eureka-server
-      - SPRING_APPLICATION_JSON={"server":{"port":8072},"eureka":{"instance":{"hostname":"eureka2"},"client":{"register-with-eureka":true,"fetch-registry":true,"serviceUrl":{"defaultZone":"http://eureka1:8070/eureka/,http://eureka3:8073/eureka/"}}}}
-
+      SPRING_APPLICATION_NAME: eureka-server
+      SERVER_PORT: "8072"
+      EUREKA_INSTANCE_HOSTNAME: eureka2
+    networks:
+      backend:
+        aliases: [ eureka2 ]
   eureka3:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    ports: ["8073:8073"]
+    ports: [ "8073:8073" ]
     environment:
-      - SPRING_APPLICATION_NAME=eureka-server
-      - SPRING_APPLICATION_JSON={"server":{"port":8073},"eureka":{"instance":{"hostname":"eureka3"},"client":{"register-with-eureka":true,"fetch-registry":true,"serviceUrl":{"defaultZone":"http://eureka1:8070/eureka/,http://eureka2:8072/eureka/"}}}}
+      SPRING_APPLICATION_NAME: eureka-server
+      SERVER_PORT: "8073"
+      EUREKA_INSTANCE_HOSTNAME: eureka3
+    networks:
+      backend:
+        aliases: [ eureka3 ]
   licensingservice:
     image: ostock/licensing-service:0.0.3-SNAPSHOT
     environment:

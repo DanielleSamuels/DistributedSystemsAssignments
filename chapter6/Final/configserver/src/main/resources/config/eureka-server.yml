@@ -12,7 +12,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     serviceUrl:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://eureka1:8070/eureka/,http://eureka2:8072/eureka/,http://eureka3:8073/eureka/}
+      defaultZone: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://eureka1:8070/eureka/,http://eureka2:8072/eureka/,http://eureka3:8073/eureka/
 
 management:
   endpoints:
