@@ -1,18 +1,14 @@
 spring:
-  application:
-    name: config-server
   profiles:
-    active:
-    - native
+    active: git
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
-        #git:
-         #   uri: https://github.com/ihuaylupo/config.git
-         #   searchPaths: licensingservice
-    
+        git:
+          uri: https://github.com/DanielleSamuels/DistributedSystemsAssignments.git
+          searchPaths: chapter6/Final/configserver/src/main/resources/config
+          default-label: main
+
 server:
   port: 8071
   
