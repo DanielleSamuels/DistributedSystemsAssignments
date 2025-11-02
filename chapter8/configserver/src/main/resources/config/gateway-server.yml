@@ -28,7 +28,10 @@ spring:
           - Path=/license/**
           filters:
           - RewritePath=/license/(?<path>.*), /$\{path}
-
+        discovery:
+          locator:
+            enabled: true
+            lowerCaseServiceId: true
 
        
 management:
