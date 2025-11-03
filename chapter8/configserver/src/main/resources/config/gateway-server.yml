@@ -19,12 +19,15 @@ spring:
         - id: baylor
           uri: https://baylor.edu
           predicates:
-            - Path=/u/**
+            - Path=/baylor/**
           filters:
-            - name: RewritePath
-              args:
-                regexp: /u/(?<p>.*)
-                replacement: /${p}
+            - RewritePath =/baylor/(?<path>.*), /$\{path}
+        - id: google
+          uri: https://www.google.com
+          predicates:
+            - Path=/google/**
+          filters:
+            - RewritePath =/google/(?<path>.*), /$\{path}
         - id: organization-service
           uri: lb://organization-service
           predicates:
