@@ -21,13 +21,13 @@ spring:
           predicates:
             - Path=/baylor/**
           filters:
-            - RewritePath =/baylor/(?<path>.*), /$\{path}
+            - RewritePath=/baylor/(?<path>.*), /$\{path}
         - id: google
           uri: https://www.google.com
           predicates:
             - Path=/google/**
           filters:
-            - RewritePath =/google/(?<path>.*), /$\{path}
+            - RewritePath=/google/(?<path>.*), /$\{path}
         - id: organization-service
           uri: lb://organization-service
           predicates:
