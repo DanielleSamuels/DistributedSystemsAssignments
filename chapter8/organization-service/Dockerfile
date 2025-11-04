@@ -1,6 +1,6 @@
 #stage 1
 #Start with a base image containing Java runtime
-FROM openjdk:11-slim as build
+FROM eclipse-temurin:11-jdk-jammy AS build
 
 # Add Maintainer Info
 LABEL maintainer="Illary Huaylupo <illaryhs@gmail.com>"
