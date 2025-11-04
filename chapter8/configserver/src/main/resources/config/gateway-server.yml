@@ -19,7 +19,7 @@ spring:
         - id: baylor
           uri: https://baylor.edu
           predicates:
-            - Path=/baylor/**
+            - Path=/baylorbears/**
           filters:
             - RewritePath=/baylor/(?<path>.*), /$\{path}
         - id: google
