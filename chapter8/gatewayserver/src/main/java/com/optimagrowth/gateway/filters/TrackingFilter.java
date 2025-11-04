@@ -24,6 +24,7 @@ public class TrackingFilter implements GlobalFilter {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
+
 		if (isCorrelationIdPresent(requestHeaders)) {
 			logger.debug("tmx-correlation-id found in tracking filter: {}. ", 
 					filterUtils.getCorrelationId(requestHeaders));
@@ -38,7 +39,7 @@ public class TrackingFilter implements GlobalFilter {
 
 
 	private boolean isCorrelationIdPresent(HttpHeaders requestHeaders) {
-		if (filterUtils.getCorrelationId(requestHeaders) != null) {
+		if (filterUtils.getCorrelationId(requestHeaders) != null && !filterUtils.getCorrelationId(requestHeaders).isBlank() && !filterUtils.getCorrelationId(requestHeaders).isEmpty()) {
 			return true;
 		} else {
 			return false;
